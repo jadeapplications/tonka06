@@ -1,0 +1,72 @@
+// Copyright (c) 2014 Mimetics Inc.
+// All Rights Reserved
+//
+// THIS SOFTWARE IS PROVIDED BY MIMETICS "AS IS" WITHOUT ANY EXPRESSED OR 
+// IMPLIED WARRANTIES.  IN NO CASE SHALL MIMETICS OR ANY CONTRIBUTORS BE
+// LIABLE IN ANY DAMAGES CAUSED BY THE USE OF THIS SOFTWARE.  
+//
+// FileName: tonka06.script
+// Version : 06.0
+//
+// Author  : myke predko
+//
+// Description: Remote Control Operation using either White Navigation Buttons or an IR Remote Control
+//
+// Release History:
+//  Tonka5  - Updated to use icon bmp that doesn't start with "_"
+//  Tonka4  - Use buttons (Remote Control) to Control operation of the robot
+//          - Work Better for "_Header1"
+//          - Updated to use a Panel to show how the motors are working
+//  tonka06 - Updated for new naming convention
+//          - Changed Motor Syscall APIs to "motorset"
+meta("icon", "Tonka5.b");
+meta("description", "Remote Move:");
+
+str                         buttons = "udlre";
+
+   
+
+    syscall(loadpanelfile, "_exec2.p");
+    syscall(setpanelicon, "tools:Tonka5.b");
+    syscall(loadsubpanelfile, "Tonka4.p");
+    syscall(setpaneltext, "pgmname:Remote Move");
+    syscall(runpanelfile, "");
+
+
+    for (; "udlre" != (buttons = syscall(getbutton, ""));) {
+    }
+
+    for (; 'e' == buttons.4; buttons = syscall(getbutton, "")) {
+        if ('U' == buttons.0) {
+            syscall(motorset, "100:100");
+            syscall(setpanelicon, "leftForward:TArrowU.b");  syscall(setpanelicon, "rightForward:TArrowU.b");
+            syscall(setpanelicon, "leftReverse:TArrow_.b");  syscall(setpanelicon, "rightReverse:TArrow_.b");
+            syscall(delay, "100");
+        }
+        else if ('D' == buttons.1) {
+            syscall(motorset, "-100:-100");
+            syscall(setpanelicon, "leftReverse:TArrowD.b");  syscall(setpanelicon, "rightReverse:TArrowD.b");
+            syscall(setpanelicon, "leftForward:TArrow_.b");  syscall(setpanelicon, "rightForward:TArrow_.b");
+            syscall(delay, "100");
+        }
+        else if ('L' == buttons.2) {
+            syscall(motorset, "-100:100");
+            syscall(setpanelicon, "leftReverse:TArrowD.b");  syscall(setpanelicon, "rightForward:TArrowU.b");
+            syscall(setpanelicon, "leftForward:TArrow_.b");  syscall(setpanelicon, "rightReverse:TArrow_.b");
+            syscall(delay, "100");
+        }
+        else if ('R' == buttons.3) {
+            syscall(motorset, "100:-100");
+            syscall(setpanelicon, "leftForward:TArrowU.b");  syscall(setpanelicon, "rightReverse:TArrowD.b");
+            syscall(setpanelicon, "leftReverse:TArrow_.b");  syscall(setpanelicon, "rightForward:TArrow_.b");
+            syscall(delay, "100");
+        }
+        else {
+            syscall(motorset, "0:0");
+            syscall(setpanelicon, "leftForward:TArrow_.b");  syscall(setpanelicon, "rightForward:TArrow_.b");
+            syscall(setpanelicon, "leftReverse:TArrow_.b");  syscall(setpanelicon, "rightReverse:TArrow_.b");
+            syscall(delay, "100");
+        }
+    }
+
+    syscall(motorleftset, "0");     syscall(motorrightset, "0");  //  Make sure everything's stopped
