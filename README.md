@@ -6,9 +6,9 @@ Remote Control Operation using either the Jade Robot's White Navigation Buttons 
 ### Project Information
 ```
 Type              : C
-Version           : 06.0
+Version           : 01.0
 Author            : myke predko
-Firmware          : 40
+Firmware          : 42
 ```
 
 
